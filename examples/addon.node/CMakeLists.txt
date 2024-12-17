@@ -4,10 +4,13 @@ set(TARGET addon.node)
 #==================================================================
 # env var supported by cmake-js
 add_definitions(-DNAPI_VERSION=4)
-include_directories(${CMAKE_JS_INC})
+include_directories(${CMAKE_JS_INC} ${CMAKE_CURRENT_SOURCE_DIR}/includes)
 #==================================================================
 
-add_library(${TARGET} SHARED ${CMAKE_JS_SRC} addon.cpp)
+# Collect all .cpp files in the current directory
+file(GLOB SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+
+add_library(${TARGET} SHARED ${CMAKE_JS_SRC} ${SOURCE_FILES})
 set_target_properties(${TARGET} PROPERTIES PREFIX "" SUFFIX ".node")
 
 include(DefaultTargetOptions)
